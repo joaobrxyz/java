@@ -15,8 +15,12 @@ public class Main {
         sinopse = """
                 Filme Top Gun:
                 Filme de aventura com Tom Cruise
-                Ano de lançamento:"""+anoDeLancamento;
+                Ano de lançamento:
+                """+anoDeLancamento;
         System.out.println(sinopse);
+
+        int classificacao = (int) (media/2);
+        System.out.println(classificacao);
 
     }
 }
