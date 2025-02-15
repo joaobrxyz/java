@@ -9,6 +9,7 @@ public class Principal {
         meuFilme.setDuracaoEmMinutos(220);
 
         meuFilme.exibeFichaTecnica();
+        System.out.println("Duração do filme: " + meuFilme.getDuracaoEmMinutos());
         meuFilme.avalia(8);
         meuFilme.avalia(5);
         meuFilme.avalia(10);
@@ -25,5 +26,7 @@ public class Principal {
         lost.exibeFichaTecnica();
         lost.setTemporadas(10);
         lost.setEpisodiosPorTemporada(10);
+        lost.setMinutosPorEpisodio(50);
+        System.out.println("Duração para marotonar Lost: " + lost.getDuracaoEmMinutos());
     }
 }
