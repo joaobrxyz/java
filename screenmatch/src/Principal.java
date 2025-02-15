@@ -3,9 +3,9 @@ import br.com.alura.screenmatch.modelos.Filme;
 public class Principal {
     public static void main(String[] args) {
         Filme meuFilme = new Filme();
-        meuFilme.nome = "Interestelar";
-        meuFilme.anoDeLancamento = 2014;
-        meuFilme.duracaoEmMinutos = 220;
+        meuFilme.setNome("Interestelar");
+        meuFilme.setAnoDeLancamento(2014);
+        meuFilme.setDuracaoEmMinutos(220);
 
         meuFilme.exibeFichaTecnica();
         meuFilme.avalia(8);
