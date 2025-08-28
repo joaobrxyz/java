@@ -17,6 +17,9 @@ public class GerenciadorPedidosApplication implements CommandLineRunner {
 	@Autowired
 	private PedidoRepository pedidoRepository;
 
+	@Autowired
+	private FornecedorRepository fornecedorRepository;
+
 
 	public static void main(String[] args) {
 		SpringApplication.run(GerenciadorPedidosApplication.class, args);
@@ -25,6 +28,6 @@ public class GerenciadorPedidosApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		Main main = new Main();
-		main.salvarNoBanco(produtoRepository, categoriaRepository, pedidoRepository);
+		main.salvarNoBanco(produtoRepository, categoriaRepository, pedidoRepository, fornecedorRepository);
 	}
 }

@@ -1,15 +1,17 @@
 package com.example.gerenciador_pedidos;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 public class Categoria {
     @Id
     private Long id;
     private String nome;
+
+    @OneToMany(mappedBy = "categoria", cascade = CascadeType.ALL)
+    private List<Produto> produtos;
 
     public Categoria(){}
 
@@ -32,5 +34,13 @@ public class Categoria {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public List<Produto> getProdutos() {
+        return produtos;
+    }
+
+    public void setProdutos(List<Produto> produtos) {
+        this.produtos = produtos;
     }
 }
