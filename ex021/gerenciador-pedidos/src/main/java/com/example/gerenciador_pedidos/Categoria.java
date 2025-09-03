@@ -7,16 +7,21 @@ import java.util.List;
 @Entity
 public class Categoria {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nome;
 
-    @OneToMany(mappedBy = "categoria", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "categoria", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Produto> produtos;
 
     public Categoria(){}
 
     public Categoria(Long id, String nome) {
         this.id = id;
+        this.nome = nome;
+    }
+
+    public Categoria(String nome) {
         this.nome = nome;
     }
 
@@ -42,5 +47,13 @@ public class Categoria {
 
     public void setProdutos(List<Produto> produtos) {
         this.produtos = produtos;
+    }
+
+    @Override
+    public String toString() {
+        return "Categoria{" +
+                "id=" + id +
+                ", nome='" + nome + '\'' +
+                '}';
     }
 }

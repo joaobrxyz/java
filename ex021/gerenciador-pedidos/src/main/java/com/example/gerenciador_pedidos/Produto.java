@@ -14,7 +14,7 @@ public class Produto {
     @Column(name = "valor")
     private Double preco;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "categoria_id")
     private Categoria categoria;
 
@@ -29,6 +29,13 @@ public class Produto {
         this.nome = nome;
         this.preco = preco;
         this.fornecedor = fornecedor;
+    }
+
+    public Produto(Fornecedor fornecedor, String nome, Double preco, Categoria categoria) {
+        this.fornecedor = fornecedor;
+        this.nome = nome;
+        this.preco = preco;
+        this.categoria = categoria;
     }
 
     public String getNome() {
@@ -69,5 +76,19 @@ public class Produto {
 
     public void setCategoria(Categoria categoria) {
         this.categoria = categoria;
+    }
+
+    @Override
+    public String toString() {
+        String fornecedorNome = (fornecedor != null) ? fornecedor.getNome() : "null";
+        String categoriaNome = (categoria != null) ? categoria.getNome() : "null";
+
+        return "Produto{" +
+                "id=" + id +
+                ", nome='" + nome + '\'' +
+                ", preco=" + preco +
+                ", fornecedor='" + fornecedorNome + '\'' +
+                ", categoria='" + categoriaNome + '\'' +
+                '}';
     }
 }

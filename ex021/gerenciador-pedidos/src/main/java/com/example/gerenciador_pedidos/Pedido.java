@@ -4,12 +4,14 @@ import jakarta.persistence.*;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 public class Pedido {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "pedido_produto",
             joinColumns = @JoinColumn(name = "pedido_id"),
@@ -20,8 +22,7 @@ public class Pedido {
 
     public Pedido(){}
 
-    public Pedido(Long id, LocalDate data) {
-        this.id = id;
+    public Pedido(LocalDate data) {
         this.data = data;
     }
 
@@ -47,5 +48,18 @@ public class Pedido {
 
     public void setData(LocalDate data) {
         this.data = data;
+    }
+
+    @Override
+    public String toString() {
+        String produtosNomes = (produtos != null) ? produtos.stream()
+                .map(Produto::getNome) // Mapeia cada produto para seu nome
+                .collect(Collectors.joining(", ")) : "null";
+
+        return "Pedido{" +
+                "id=" + id +
+                ", produtos=[" + produtosNomes + "]" +
+                ", data=" + data +
+                '}';
     }
 }
