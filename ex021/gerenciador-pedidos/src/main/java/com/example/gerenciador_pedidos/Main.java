@@ -39,6 +39,13 @@ public class Main {
                     16 - Visualizar produtos de uma categoria ordenados pelo preço de forma decrescente
                     17 - Visualizar a contagem de produtos em uma categoria
                     18 - Visualizar a contagem de produtos cujo preço seja maior que o valor fornecido
+                    19 - Visualizar produtos com preço maior que um valor
+                    20 - Visualizar proodutos ordenados pelo preço crescente
+                    21 - Visualizar proodutos ordenados pelo preço decrescente
+                    22 - Visualizar produtos que comecem com uma letra específica
+                    23 - Visualizar a média de preços dos produtos
+                    24 - Visualizar o preço máximo de um produto em uma categoria
+                    25 - Visualizar o número de produtos por categoria
                     
                     0 - Sair                                 
                     """;
@@ -101,6 +108,27 @@ public class Main {
                     break;
                 case 18:
                     visualizarContagemProdutosPorPrecoMaior();
+                    break;
+                case 19:
+                    visualizarProdutosMaiorQueUmValor();
+                    break;
+                case 20:
+                    visualizarProdutosOrdenadosCrescente();
+                    break;
+                case 21:
+                    visualizarProdutosOrdenadosDecrescente();
+                    break;
+                case 22:
+                    visualizarProdutosStartsLetra();
+                    break;
+                case 23:
+                    visualizarMediaPrecosProdutos();
+                    break;
+                case 24:
+                    precoMaximoProdutoPorCategoria();
+                    break;
+                case 25:
+                    numeroProdutosPorCategoria();
                     break;
                 case 0:
                     System.out.println("Saindo...");
@@ -193,6 +221,64 @@ public class Main {
         var valor = leitura.nextDouble();
         Long produtosCont = produtoRepository.countByPrecoGreaterThanEqual(valor);
         System.out.println("Existe " + produtosCont + " produtos maiores que R$" + valor);
+    }
+    private void visualizarProdutosMaiorQueUmValor() {
+        System.out.println("A partir de que valor pra cima? ");
+        var valor = leitura.nextDouble();
+        leitura.nextLine();
+        List<Produto> produtos = produtoRepository.produtosPrecoMaior(valor);
+        produtos.forEach(System.out::println);
+    }
+    private void visualizarProdutosOrdenadosCrescente() {
+        List<Produto> produtos = produtoRepository.orderByPreco();
+        produtos.forEach(System.out::println);
+    }
+    private void visualizarProdutosOrdenadosDecrescente() {
+        List<Produto> produtos = produtoRepository.orderByPrecoDecrescente();
+        produtos.forEach(System.out::println);
+    }
+    private void visualizarProdutosStartsLetra() {
+        System.out.println("Digite uma letra: ");
+        var letra = leitura.nextLine();
+        List<Produto> produtos = produtoRepository.startsWithLetter(letra);
+        produtos.forEach(System.out::println);
+    }
+    private void visualizarMediaPrecosProdutos() {
+        double media = produtoRepository.mediaPrecos();
+        System.out.println("A média de preços é: R$" + media);
+    }
+    private void precoMaximoProdutoPorCategoria() {
+        System.out.println("Categorias disponíveis: ");
+        visualizarCategorias();
+        System.out.println("Digite o id da categoria para visualizar os produtos: ");
+        Long categoriaId = leitura.nextLong();
+        leitura.nextLine();
+
+        Optional<Categoria> categoriaOp = categoriaRepository.findById(categoriaId);
+        if (categoriaOp.isEmpty()) {
+            System.out.println("Categoria com o ID " + categoriaId + " não encontrada. Abortando operação.");
+            return;
+        }
+        Categoria categoria = categoriaOp.get();
+        double precoMaximo = produtoRepository.precoMaximoPorCategoria(categoria);
+        System.out.println("O preço máximo dessa categoria é R$" + precoMaximo);
+    }
+    private void numeroProdutosPorCategoria() {
+        System.out.println("Categorias disponíveis: ");
+        visualizarCategorias();
+        System.out.println("Digite o id da categoria para visualizar os produtos: ");
+        Long categoriaId = leitura.nextLong();
+        leitura.nextLine();
+
+        Optional<Categoria> categoriaOp = categoriaRepository.findById(categoriaId);
+        if (categoriaOp.isEmpty()) {
+            System.out.println("Categoria com o ID " + categoriaId + " não encontrada. Abortando operação.");
+            return;
+        }
+        Categoria categoria = categoriaOp.get();
+
+        int numeroProdutos = produtoRepository.contarProdutosPorCategoria(categoria);
+        System.out.println("Existem " + numeroProdutos + " produtos nessa categoria");
     }
     private void cadastrarProduto() {
         System.out.println("Categorias disponíveis: ");
